@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css">
+    
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #f0f4f7; 
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+ 
+.carousel {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px; 
+}
+
+.card {
+    flex: 1 1 calc(33% - 20px); 
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 25px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+    margin: 0 10px; 
+}
+
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h3 {
+            font-size: 1.9rem;
+            margin-bottom: 15px;
+            color: #34495e;
+            font-weight: 600;
+        }
+
+        .card a {
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 1rem;
+            display: block;
+            margin-top: 15px;
+            padding: 12px 0;
+            background-color: #3498db; 
+            border-radius: 6px;
+            transition: background-color 0.3s ease;
+        }
+
+        .card a:hover {
+            background-color: #2980b9; 
+        }
+
+        .card a:nth-child(2) {
+            background-color: #f39c12; 
+            margin-top: 10px;
+        }
+
+        .card a:nth-child(2):hover {
+            background-color: #e67e22;
+        }
+
+        .card p {
+            font-size: 1rem;
+            color: #7f8c8d; 
+            margin-bottom: 20px;
+        }
+
+        .card-icon {
+            width: 70px;
+            height: 70px;
+            background-color: #3498db; 
+            border-radius: 50%;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #ffffff;
+            font-size: 2rem;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .card-icon:hover {
+            background-color: #2980b9; 
+            transform: rotate(360deg);
+        }
+
+        
+        .slick-prev, .slick-next {
+            font-size: 30px;
+            color: #3498db;
+            z-index: 1;
+        }
+
+        .slick-prev:hover, .slick-next:hover {
+            color: #2980b9;
+        }
+
+        .slick-dots li button:before {
+            color: #3498db;
+        }
+
+        .slick-dots li.slick-active button:before {
+            color: #2980b9;
+        }
+
+ 
+        @media (max-width: 768px) {
+            .carousel {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .card {
+                flex: 1 1 100%; 
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Your One-Stop Inventory Management Solution</h1>
+    <br>
+    <br>
+    <br>
+
+
+    <div class="container">
+   
+        <div class="carousel">
+            <div class="card">
+                <div class="card-icon">🛍️</div>
+                <h3>Products</h3>
+                <p>View and manage your product catalog.</p>
+                <a href="{% url 'list_products' %}">View Products</a>
+                <a href="{% url 'add_product' %}">Add New Product</a>
+            </div>
+            
+            <div class="card">
+                <div class="card-icon">🏭</div>
+                <h3>Suppliers</h3>
+                <p>Monitor supplier details and add new contacts.</p>
+                <a href="{% url 'list_suppliers' %}">View Suppliers</a>
+                <a href="{% url 'add_supplier' %}">Add New Supplier</a>
+            </div>
+            
+            <div class="card">
+                <div class="card-icon">🔄</div>
+                <h3>Stock Movements</h3>
+                <p>Record and track inventory changes.</p>
+                <a href="{% url 'add_stock_movement' %}">Add Stock Movement</a>
+            </div>
+            
+            <div class="card">
+                <div class="card-icon">📦</div>
+                <h3>Orders</h3>
+                <p>Generate and manage customer orders.</p>
+                <a href="{% url 'list_orders' %}">View Orders</a>
+                <a href="{% url 'create_sale_order' %}">Create New Sale Order</a>
+            </div>
+            
+            <div class="card">
+                <div class="card-icon">📊</div>
+                <h3>Stock Levels</h3>
+                <p>View and monitor your current inventory levels.</p>
+                <a href="{% url 'check_stock_levels' %}">Check Stock Levels</a>
+            </div>
+            
+        </div>
+    </div>
+
+   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+
+    <script>
+        $(document).ready(function(){
+            $('.carousel').slick({
+                infinite: true,
+                slidesToShow: 3,
+                slidesToScroll: 1,
+                dots: true,
+                prevArrow: '<button type="button" class="slick-prev">‹</button>',
+                nextArrow: '<button type="button" class="slick-next">›</button>',
+                responsive: [
+                    {
+                        breakpoint: 768,
+                        settings: {
+                            slidesToShow: 1,
+                        }
+                    }
+                ]
+            });
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Record Stock Movement</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f7fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            transition: box-shadow 0.3s ease-in-out;
+        }
+
+        .container:hover {
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #666;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        select, input, textarea {
+            padding: 14px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+            width: 100%;
+            background-color: #f9f9f9;
+            transition: all 0.3s ease;
+        }
+
+        select:focus, input:focus, textarea:focus {
+            border-color: #3498db;
+            background-color: #fff;
+        }
+
+        input[type="number"] {
+            width: 100%;
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 16px;
+            width: 100%;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .form-footer {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .form-footer a {
+            font-size: 14px;
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        .form-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .back-to-home {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #3498db;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease;
+        }
+
+        .back-to-home:hover {
+            background-color: #2980b9;
+        }
+
+        .stock-info {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #333;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Record Stock Movement</h1>
+
+        <form method="POST">
+            {% csrf_token %}
+            
+            <label for="product">Select Product:</label>
+            <select name="product" id="product">
+                {% for product in products %}
+                    <option value="{{ product.id }}" data-stock="{{ product.stock_quantity }}">
+                        {{ product.name }} (Available: {{ product.stock_quantity }})
+                    </option>
+                {% endfor %}
+            </select>
+
+            <label for="movement_type">Movement Type:</label>
+            <select name="movement_type" id="movement_type">
+                <option value="In">In</option>
+                <option value="Out">Out</option>
+            </select>
+
+            <label for="quantity">Quantity:</label>
+            <input type="number" name="quantity" id="quantity" required>
+
+            <label for="notes">Notes:</label>
+            <textarea name="notes" id="notes"></textarea>
+
+            <button type="submit">Record Movement</button>
+        </form>
+
+        <div class="form-footer">
+            <a href="{% url 'list_products' %}">Back to Product List</a>
+        </div>
+    </div>
+
+    <a href="{% url 'home' %}" class="back-to-home">Back to Home</a>
+
+    <script>
+        const productSelect = document.getElementById('product');
+        const movementTypeSelect = document.getElementById('movement_type');
+        const stockInfo = document.getElementById('stock-info');
+        const availableStockSpan = document.getElementById('available-stock');
+        const quantityInput = document.getElementById('quantity');
+        const form = document.querySelector('form');
+        const errorMessage = document.createElement('div');
+        errorMessage.style.color = 'red';
+        errorMessage.style.marginTop = '10px';
+        form.appendChild(errorMessage);
+
+        productSelect.addEventListener('change', function () {
+            const selectedProduct = productSelect.options[productSelect.selectedIndex];
+            const stockQuantity = selectedProduct.getAttribute('data-stock');
+            if (movementTypeSelect.value === 'Out') {
+                stockInfo.style.display = 'block';
+                availableStockSpan.textContent = stockQuantity;
+            } else {
+                stockInfo.style.display = 'none';
+            }
+        });
+
+        movementTypeSelect.addEventListener('change', function () {
+            if (movementTypeSelect.value === 'Out') {
+                const selectedProduct = productSelect.options[productSelect.selectedIndex];
+                const stockQuantity = selectedProduct.getAttribute('data-stock');
+                stockInfo.style.display = 'block';
+                availableStockSpan.textContent = stockQuantity;
+            } else {
+                stockInfo.style.display = 'none';
+            }
+        });
+
+        form.addEventListener('submit', function (event) {
+            const selectedProduct = productSelect.options[productSelect.selectedIndex];
+            const stockQuantity = parseInt(selectedProduct.getAttribute('data-stock'));
+            const enteredQuantity = parseInt(quantityInput.value);
+
+            if (movementTypeSelect.value === 'Out' && enteredQuantity > stockQuantity) {
+                event.preventDefault();
+                errorMessage.textContent = 'Insufficient stock to perform the "Out" movement.';
+            } else {
+                errorMessage.textContent = '';
+            }
+        });
+    </script>
+</body>
+</html>

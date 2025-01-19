@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f4f7fc;
+            padding: 20px;
+            margin: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 40px;
+        }
+
+        .analytics-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .analytics-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin: 20px;
+            width: 300px;
+            text-align: center;
+        }
+
+        .analytics-card h3 {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .analytics-card p {
+            font-size: 1.2rem;
+            color: #777;
+        }
+
+        .card-data {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2ecc71;
+        }
+
+        .card-button {
+            background-color: #3498db;
+            color: white;
+            font-size: 1.2rem;
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+        }
+
+        .card-button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Analytics Dashboard</h1>
+
+    <div class="analytics-container">
+        <!-- Example Analytics Card 1 -->
+        <div class="analytics-card">
+            <h3>Total Products</h3>
+            <p>Total number of products in the inventory.</p>
+            <div class="card-data">{{ total_products }}</div>
+            <a href="{% url 'list_products' %}" class="card-button">View Products</a>
+        </div>
+
+        <!-- Example Analytics Card 2 -->
+        <div class="analytics-card">
+            <h3>Total Orders</h3>
+            <p>Total number of orders placed.</p>
+            <div class="card-data">{{ total_orders }}</div>
+            <a href="{% url 'list_orders' %}" class="card-button">View Orders</a>
+        </div>
+
+        <!-- Example Analytics Card 3 -->
+        <div class="analytics-card">
+            <h3>Total Suppliers</h3>
+            <p>Total number of suppliers in the system.</p>
+            <div class="card-data">{{ total_suppliers }}</div>
+            <a href="{% url 'list_suppliers' %}" class="card-button">View Suppliers</a>
+        </div>
+
+        <!-- Example Analytics Card 4 -->
+        <div class="analytics-card">
+            <h3>Stock Movements</h3>
+            <p>Track recent stock movements.</p>
+            <div class="card-data">{{ total_stock_movements }}</div>
+            <a href="{% url 'list_stock_movements' %}" class="card-button">View Stock Movements</a>
+        </div>
+    </div>
+
+</body>
+</html>

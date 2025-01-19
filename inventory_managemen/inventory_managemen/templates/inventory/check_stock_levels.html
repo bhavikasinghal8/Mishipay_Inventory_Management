@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check Stock Levels</title>
+    <style>
+       
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f0f4f7, #e4e9f2); 
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+       
+        .container {
+            background-color: #fff;
+            width: 95%;
+            max-width: 900px;
+            margin-top: 40px;
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+      
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2em;
+            font-weight: 700;
+            border-bottom: 2px solid #3498db; 
+            padding-bottom: 10px;
+        }
+
+       
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #fff;
+        }
+
+        th, td {
+            padding: 18px;
+            text-align: left;
+            border-bottom: 1px solid #e1e8f0; 
+            font-size: 1rem;
+            color: #34495e;
+        }
+
+        th {
+            background-color: #f8fafb;  
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        td {
+            color: #555;
+        }
+
+        tr {
+            transition: background-color 0.3s ease;
+        }
+
+        tr:hover {
+            background-color: #f4f6f9;
+        }
+
+        .back-to-home {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #3498db; 
+            color: white;
+            padding: 15px 25px;
+            border-radius: 25px; 
+            font-weight: bold;
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-to-home:hover {
+            background-color: #2980b9;  
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            th, td {
+                padding: 14px;
+                font-size: 0.9rem;
+            }
+
+            .back-to-home {
+                font-size: 1rem;
+                padding: 12px 20px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Current Stock Levels</h1>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Stock Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                <tr>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.stock_quantity }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <a href="{% url 'home' %}" class="back-to-home">Back to Home</a>
+
+</body>
+</html>
